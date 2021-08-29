@@ -8,6 +8,7 @@ const checkSeriesInDB = async (req, res, next) => {
     if (dbQuery) {
       // if present, assign entry data to res.locals.tmdb_data
       res.locals.tmdb_data = dbQuery;
+      console.log('TESTA', res.locals.tmdb_data);
       next();
     } else {
       // if not, call TMDB API and assign response to res.locals.tmdb_data
@@ -17,7 +18,7 @@ const checkSeriesInDB = async (req, res, next) => {
         )
         .then(response => {
           const data = { ...response.data };
-          res.locals.tmdb_data = {
+          const newSeriesData = {
             title: data.name,
             tmdb_id: data.id,
             overview: data.overview,
@@ -26,12 +27,13 @@ const checkSeriesInDB = async (req, res, next) => {
             poster_path: data.poster_path,
             tagline: data.tagline,
           };
-          TvSeries.create(res.locals.tmdb_data);
+          const newDbEntry = TvSeries.create(newSeriesData);
+          return newDbEntry;
+        })
+        .then(newDbEntry => {
+          res.locals.tmdb_data = newDbEntry;
         })
         .then(() => {
-          // the next function after this middleware adds the series to the logged in users watchlist
-          // for some reason, next() is called before the above block is completed
-          // this means it tries to add a TV series which hasn't been created in the final line of the above code yet
           next();
         })
         .catch(error => {
