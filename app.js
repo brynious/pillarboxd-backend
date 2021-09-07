@@ -2,6 +2,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const express = require('express');
+const cors = require('cors');
+const corsConfig = {
+  credentials: true,
+  origin: true,
+};
 const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/auth.routes');
@@ -13,6 +18,7 @@ const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser } = require('./middleware/auth.middleware');
 
 const app = express();
+app.use(cors(corsConfig));
 
 // middleware
 app.use(express.static('public'));
