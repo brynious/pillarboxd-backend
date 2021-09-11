@@ -3,17 +3,19 @@ const jwt = require('jsonwebtoken');
 
 // handle errors
 const handleErrors = err => {
-  console.log(err.message, err.code);
+  // console.log(err.message, err.code);
   let errors = { username: '', email: '', password: '' };
 
   // incorrect email
   if (err.message === 'incorrect email') {
     errors.email = 'that email is not registered';
+    return errors;
   }
 
   // incorrect password
   if (err.message === 'incorrect password') {
     errors.password = 'that password is incorrect';
+    return errors;
   }
 
   // duplicate username error code
@@ -29,14 +31,17 @@ const handleErrors = err => {
   }
 
   // validation errors
-  if (err.message.includes('user validation failed')) {
+  if (err.message.includes('validation failed')) {
     Object.values(err.errors).forEach(({ properties }) => {
-      console.log(properties);
       errors[properties.path] = properties.message;
     });
+    return errors;
   }
 
-  return errors;
+  console.log(
+    "Error in auth.controller function that wasn't able to be handled by handleErrors"
+  );
+  console.log({ err });
 };
 
 const maxAge = 60 * 60 * 24 * 3;
@@ -64,7 +69,6 @@ module.exports.signup_post = async (req, res) => {
       .status(201)
       .json({ userID: user._id, username: user.username, email: user.email });
   } catch (err) {
-    console.log(err);
     const errors = handleErrors(err);
     res.status(400).json({ errors });
   }
@@ -77,7 +81,6 @@ module.exports.login_post = async (req, res) => {
     const user = await User.login(email, password);
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-    console.log(user);
     res
       .status(200)
       .json({ userID: user._id, username: user.username, email: user.email });
@@ -88,6 +91,5 @@ module.exports.login_post = async (req, res) => {
 };
 
 module.exports.logout_get = (req, res) => {
-  res.cookie('jwt', '', { maxAge: 1 });
-  res.redirect('/');
+  res.cookie('jwt', '', { maxAge: 1 }).json({ authorisation: 'logged out' });
 };
