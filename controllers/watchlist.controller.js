@@ -46,7 +46,7 @@ module.exports.user_watchlist_post = async (req, res) => {
 
 module.exports.user_watchlist_delete = async (req, res) => {
   try {
-    const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.body.tmdb_id });
+    const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.params.tmdb_id });
     const updatedUser = await User.findOneAndUpdate(
       { _id: res.locals.user._id },
       { $pull: { watchlist: tvSeriesObj._id } },

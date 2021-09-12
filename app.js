@@ -42,10 +42,14 @@ mongoose
 mongoose.set('useFindAndModify', false);
 
 // routes
-// app.get('*', checkUser);
-app.post('*', checkUser);
-app.delete('*', checkUser);
-app.get('/', (req, res) => res.render('home'));
+
+// TODO: delete this and the other views from tutorial before pushing live
+// app.get('/', (req, res) => res.render('home')); legacy function
+
+// app.get('*', checkUser); // no login currently required to view other users lists
+app.post('*', checkUser); // authorisation required for all POST requests
+app.delete('*', checkUser); // authorisation required for all DELETE requests
+
 app.use(authRoutes);
 app.use(userRoutes);
 app.use(watchlistRoutes);

@@ -46,7 +46,7 @@ module.exports.user_watched_post = async (req, res) => {
 
 module.exports.user_watched_delete = async (req, res) => {
   try {
-    const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.body.tmdb_id });
+    const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.params.tmdb_id });
     const updatedUser = await User.findOneAndUpdate(
       { _id: res.locals.user._id },
       { $pull: { watched: tvSeriesObj._id } },
