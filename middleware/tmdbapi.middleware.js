@@ -6,7 +6,7 @@ const checkSeriesInDB = async (req, res, next) => {
   try {
     const dbQuery = await TvSeries.findOne({ tmdb_id: req.params.tmdb_id });
     if (dbQuery) {
-      // if present, assign entry data to res.locals.tmdb_data
+      // if TV show is in DB, assign entry data to res.locals.tmdb_data
       res.locals.tmdb_data = dbQuery;
       next();
     } else {
