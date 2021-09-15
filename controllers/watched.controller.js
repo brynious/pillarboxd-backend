@@ -34,6 +34,19 @@ module.exports.user_watched_get = (req, res) => {
 
 module.exports.user_watched_post = async (req, res) => {
   try {
+    // remove series from other two lists
+    const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.params.tmdb_id });
+    await User.findOneAndUpdate(
+      { _id: res.locals.user._id },
+      { $pull: { watchlist: tvSeriesObj._id } },
+      { new: true }
+    );
+    await User.findOneAndUpdate(
+      { _id: res.locals.user._id },
+      { $pull: { watching: tvSeriesObj._id } },
+      { new: true }
+    );
+    // add series to desired list
     const updatedUser = await User.findOneAndUpdate(
       { _id: res.locals.user._id },
       { $addToSet: { watched: res.locals.tmdb_data } },
