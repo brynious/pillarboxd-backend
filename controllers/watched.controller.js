@@ -23,6 +23,9 @@ module.exports.user_watched_get = (req, res) => {
     .exec((err, results) => {
       if (err) {
         console.log(err);
+        res.status(404).send('there was an error with this request');
+      } else if (results === null) {
+        res.status(404).send('no such user');
       } else {
         res.send(results.watched);
       }

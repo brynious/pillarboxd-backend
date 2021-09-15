@@ -16,10 +16,16 @@ const handleErrors = err => {
 // controller actions
 module.exports.user_watching_get = (req, res) => {
   User.findOne({ username: req.params.username }, 'username email watching')
-    .populate('watching')
+    .populate(
+      'watching',
+      'title tmdb_id overview tagline backdrop_path poster_path first_air_date'
+    )
     .exec((err, results) => {
       if (err) {
         console.log(err);
+        res.status(404).send('there was an error with this request');
+      } else if (results === null) {
+        res.status(404).send('no such user');
       } else {
         res.send(results.watching);
       }
