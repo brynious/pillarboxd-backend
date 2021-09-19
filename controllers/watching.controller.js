@@ -34,8 +34,8 @@ module.exports.user_watching_get = (req, res) => {
 
 module.exports.user_watching_post = async (req, res) => {
   try {
-    // remove series from 'watching' if it's already there
     const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.params.tmdb_id });
+    // remove series from 'watching' if it's already there
     await User.findOneAndUpdate(
       { _id: res.locals.user._id },
       { $pull: { watchlist: tvSeriesObj._id } },
