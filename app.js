@@ -9,13 +9,14 @@ const corsConfig = {
 };
 const mongoose = require('mongoose');
 
+const cookieParser = require('cookie-parser');
+const { requireAuth, checkUser } = require('./middleware/auth.middleware');
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
 const watchlistRoutes = require('./routes/watchlist.routes');
 const watchingRoutes = require('./routes/watching.routes');
 const watchedRoutes = require('./routes/watched.routes');
-const cookieParser = require('cookie-parser');
-const { requireAuth, checkUser } = require('./middleware/auth.middleware');
+const testRoutes = require('./routes/test.routes');
 
 const app = express();
 app.use(cors(corsConfig));
@@ -55,3 +56,5 @@ app.use(userRoutes);
 app.use(watchlistRoutes);
 app.use(watchingRoutes);
 app.use(watchedRoutes);
+
+app.use(testRoutes);

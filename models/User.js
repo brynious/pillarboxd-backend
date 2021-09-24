@@ -24,6 +24,7 @@ const userSchema = new mongoose.Schema({
   watchlist: [{ type: Schema.ObjectId, ref: 'TvSeries' }],
   watching: [{ type: Schema.ObjectId, ref: 'TvSeries' }],
   watched: [{ type: Schema.ObjectId, ref: 'TvSeries' }],
+  userSeries: [{ type: Schema.ObjectId, ref: 'UserSeriesSchema' }],
 });
 
 // fire a function before doc saved to db
