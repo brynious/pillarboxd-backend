@@ -1,13 +1,14 @@
 const dotenv = require('dotenv');
 dotenv.config();
 
+const mongoose = require('mongoose');
+
 const express = require('express');
 const cors = require('cors');
 const corsConfig = {
   credentials: true,
   origin: true,
 };
-const mongoose = require('mongoose');
 
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
@@ -27,14 +28,21 @@ app.use(cookieParser());
 
 // database connection
 const dbURI = process.env.DB_URI;
-mongoose
-  .connect(dbURI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(result => app.listen(3000))
-  .catch(err => console.log(err));
+const connectDB = async () => {
+  try {
+    await mongoose.connect(dbURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    });
+
+    console.log('MongoDB is Connected...');
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+connectDB();
 
 mongoose.set('useFindAndModify', false);
 
@@ -52,4 +60,6 @@ app.use(watchlistRoutes);
 app.use(watchingRoutes);
 app.use(watchedRoutes);
 
-// app.listen(port, () => console.log(`Server running on port ${port}`));
+const port = process.env.PORT || 8082;
+
+app.listen(port, () => console.log(`Server running on port ${port}`));
