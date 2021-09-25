@@ -12,6 +12,9 @@ const UserSeriesSchema = new mongoose.Schema({
     min: [1, 'must be between 1 and 10, got {VALUE}'],
     max: [10, 'must be between 1 and 10, got {VALUE}'],
   },
+  liked: {
+    type: Boolean,
+  },
   inWatchlist: {
     type: Boolean,
     default: false,

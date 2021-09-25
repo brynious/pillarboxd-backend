@@ -15,7 +15,7 @@ const handleErrors = err => {
 };
 
 // controller actions
-module.exports.test_user_watchlist_get = (req, res) => {
+module.exports.test_user_series_get = (req, res) => {
   console.log(req);
   res.send('test successful');
   // User.findOne({ username: req.params.username }, 'username email watchlist')
@@ -32,9 +32,28 @@ module.exports.test_user_watchlist_get = (req, res) => {
   //   });
 };
 
-module.exports.test_user_watchlist_post = async (req, res) => {
-  console.log(req);
+module.exports.test_user_series_post = async (req, res) => {
+  console.log(req.params);
+  console.log(req.body);
+  console.log(res.locals.user._id);
+  console.log(res.locals.tmdb_data.title);
+
   res.send('test successful');
+
+  try {
+    const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.params.tmdb_id });
+    // console.log(tvSeriesObj.title);
+    // console.log(tvSeriesObj._id);
+    const newUserSeriesData = {
+      ...req.body,
+    };
+    console.log({ newUserSeriesData });
+    // const userSeriesObj = UserSeries.create
+  } catch (err) {
+    const errors = handleErrors(err);
+    console.log(errors);
+    res.status(400).json(errors);
+  }
   // try {
   //   const tvSeriesObj = await TvSeries.findOne({ tmdb_id: req.params.tmdb_id });
   //   // remove series from 'watching' if it's already there
@@ -53,7 +72,7 @@ module.exports.test_user_watchlist_post = async (req, res) => {
   // }
 };
 
-module.exports.test_user_watchlist_delete = async (req, res) => {
+module.exports.test_user_series_delete = async (req, res) => {
   console.log(req.params);
   console.log(req.body);
   res.send('test successful');
