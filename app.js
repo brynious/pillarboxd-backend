@@ -40,8 +40,7 @@ mongoose.set('useFindAndModify', false);
 
 // routes
 
-// TODO: delete this and the other views from tutorial before pushing live
-// app.get('/', (req, res) => res.render('home')); legacy function
+app.get('/', (req, res) => res.send('Hello world!'));
 
 // app.get('*', checkUser); // no login currently required to view other users lists
 app.post('*', checkUser); // authorisation required for all POST requests
