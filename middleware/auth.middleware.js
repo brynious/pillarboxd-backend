@@ -23,15 +23,16 @@ const requireAuth = (req, res, next) => {
 // check current user
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
+  if (!token) {
+    console.log('req.cookies.jwt not found in checkUser function');
+  }
 
   if (token) {
     jwt.verify(token, 'net ninja secret ABC', async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.locals.user = null;
-        res
-          .status(400)
-          .send('Not verified - failed in auth.middleware.js > checkuser');
+        res.status(400).send('Not verified - failed in auth.middleware.js > checkuser');
       } else {
         // console.log({ decodedToken });
         let user = await User.findById(decodedToken.id);
