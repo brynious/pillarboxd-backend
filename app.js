@@ -19,12 +19,6 @@ const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser } = require('./middleware/auth.middleware');
 
 const app = express();
-app.use(cors(corsConfig));
-
-// middleware
-app.use(express.static('public'));
-app.use(express.json());
-app.use(cookieParser());
 
 // database connection
 const dbURI = process.env.DB_URI;
@@ -43,6 +37,13 @@ const connectDB = async () => {
 };
 
 connectDB();
+
+app.use(cors(corsConfig));
+
+// middleware
+app.use(express.static('public'));
+app.use(express.json());
+app.use(cookieParser());
 
 mongoose.set('useFindAndModify', false);
 
