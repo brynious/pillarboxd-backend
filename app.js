@@ -7,7 +7,8 @@ const express = require('express');
 const cors = require('cors');
 const corsConfig = {
   credentials: true,
-  origin: '/https://pillarboxd.netlify.app.*/',
+  methods: 'GET,POST,DELETE',
+  origin: /https:\/\/pillarboxd.netlify.app.*/,
 };
 
 const authRoutes = require('./routes/auth.routes');
