@@ -16,8 +16,26 @@ const corsConfig = {
   credentials: true,
   methods: 'GET,POST,DELETE',
   origin: /https:\/\/pillarboxd.netlify.app.*/,
-  allowedHeaders:
-    'Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Connection, Content-Length, DNT, Host, Origin, Referer, sec-ch-ua, sec-ch-ua-platform, Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site, User-Agent',
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Accept-Encoding',
+    'Accept-Language',
+    'Connection',
+    'Content-Length',
+    'DNT',
+    'Host',
+    'Origin',
+    'Referer',
+    'sec-ch-ua',
+    'sec-ch-ua-platform',
+    'Sec-Fetch-Dest',
+    'Sec-Fetch-Mode',
+    'Sec-Fetch-Site',
+    'User-Agent',
+  ],
 };
 
 const app = express();
