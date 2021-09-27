@@ -1,15 +1,7 @@
 const dotenv = require('dotenv');
 dotenv.config();
-
 const mongoose = require('mongoose');
-
 const express = require('express');
-const cors = require('cors');
-const corsConfig = {
-  credentials: true,
-  methods: 'GET,POST,DELETE',
-  origin: /https:\/\/pillarboxd.netlify.app.*/,
-};
 
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
@@ -18,6 +10,15 @@ const watchingRoutes = require('./routes/watching.routes');
 const watchedRoutes = require('./routes/watched.routes');
 const cookieParser = require('cookie-parser');
 const { requireAuth, checkUser } = require('./middleware/auth.middleware');
+
+const cors = require('cors');
+const corsConfig = {
+  credentials: true,
+  methods: 'GET,POST,DELETE',
+  origin: /https:\/\/pillarboxd.netlify.app.*/,
+  allowedHeaders:
+    'Origin, X-Requested-With, Content-Type, Accept, Accept-Encoding, Accept-Language, Connection, Content-Length, DNT, Host, Origin, Referer, sec-ch-ua, sec-ch-ua-platform, Sec-Fetch-Dest, Sec-Fetch-Mode, Sec-Fetch-Site, User-Agent',
+};
 
 const app = express();
 
