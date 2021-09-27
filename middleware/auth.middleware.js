@@ -27,7 +27,7 @@ const checkUser = (req, res, next) => {
   if (!token) {
     console.log('req.cookies.jwt not found in checkUser function');
   } else {
-    console.log('cookies', req.cookies);
+    console.log('cookie', req.cookies);
   }
 
   if (token) {

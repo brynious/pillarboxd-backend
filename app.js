@@ -7,7 +7,7 @@ const express = require('express');
 const cors = require('cors');
 const corsConfig = {
   credentials: true,
-  origin: '*',
+  origin: true,
 };
 
 const authRoutes = require('./routes/auth.routes');
