@@ -23,12 +23,6 @@ const requireAuth = (req, res, next) => {
 // check current user
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
-  console.log(req);
-  if (!token) {
-    console.log('req.cookies.jwt not found in checkUser function');
-  } else {
-    console.log('cookie', req.cookies);
-  }
 
   if (token) {
     jwt.verify(token, 'net ninja secret ABC', async (err, decodedToken) => {
