@@ -42,7 +42,7 @@ const handleErrors = err => {
   console.log({ err });
 };
 
-const maxAge = 60 * 60 * 24 * 3;
+const maxAge = 60 * 60 * 24 * 365;
 const createToken = id => {
   return jwt.sign({ id }, 'net ninja secret ABC', { expiresIn: maxAge });
 };
